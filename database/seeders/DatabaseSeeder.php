@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Reply;
+use App\Models\Tag;
 use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -37,6 +38,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->count(50)->create();
         Topic::factory()->count(20)->create();
         Post::factory()->count(100)->create();
+        Tag::factory()->count(50)->create();
         Comment::factory()->count(100)->create();
         Reply::factory()->count(100)->create();
 

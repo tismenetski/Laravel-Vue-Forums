@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TopicFactory extends Factory
+class TagFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -15,10 +14,8 @@ class TopicFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->text(20),
-            'content' => $this->faker->sentences(10,true),
-            'category_id' => Category::all()->random()->id,
-
+            'name' => $this->faker->word(),
+            'counter' => $this->faker->numberBetween(1,1)
         ];
     }
 }

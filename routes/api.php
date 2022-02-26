@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\TopicController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +35,14 @@ Route::middleware('auth:sanctum')->group(function (){
 //
 //});
 
+
+Route::get('/categories', [CategoryController::class,'index']);
+Route::get('/categories/{id}' , [CategoryController::class,'show']);
+
+Route::get('/topics/{category_id}', [TopicController::class,'index']);
+Route::post('/topics' , [TopicController::class, 'create']);
+
+Route::get('/posts/{topic_id}' , [PostController::class, 'index']);
 
 
 Route::post('/register' , [AuthController::class,'register']);
