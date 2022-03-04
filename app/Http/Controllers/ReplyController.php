@@ -2,22 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Topic;
 use Illuminate\Http\Request;
 
-class TopicController extends Controller
+class ReplyController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($category_id)
+    public function index()
     {
-        $topics = Topic::where(['category_id' => $category_id])->withCount('posts')->get();
-
-        return response($topics,200);
-
+        //
     }
 
     /**
@@ -25,19 +21,9 @@ class TopicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $data = $request->validate([
-
-            'name' => 'required|string',
-            'content' => 'string',
-            'category_id' => 'required|exists:categories,id'
-
-        ]);
-
-        $topic = Topic::create($data);
-
-        return response($topic, 201);
+        //
     }
 
     /**
@@ -59,9 +45,7 @@ class TopicController extends Controller
      */
     public function show($id)
     {
-        $topic = Topic::findOrFail($id);
-
-        return response($topic, 200);
+        //
     }
 
     /**
@@ -72,8 +56,7 @@ class TopicController extends Controller
      */
     public function edit($id)
     {
-
-
+        //
     }
 
     /**
@@ -85,9 +68,7 @@ class TopicController extends Controller
      */
     public function update(Request $request, $id)
     {
-            $user = $request->user();
-
-            //todo implement spatie roles and allow only to admins or moderators to modify topic
+        //
     }
 
     /**

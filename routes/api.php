@@ -41,8 +41,14 @@ Route::get('/categories/{id}' , [CategoryController::class,'show']);
 
 Route::get('/topics/{category_id}', [TopicController::class,'index']);
 Route::post('/topics' , [TopicController::class, 'create']);
+Route::delete('/topics/topic/{id}', [TopicController::class,'destroy']);
 
 Route::get('/posts/{topic_id}' , [PostController::class, 'index']);
+Route::middleware('auth:sanctum')->post('/posts' , [PostController::class, 'create']);
+Route::get('posts/post/{id}', [PostController::class, 'show']);
+Route::middleware('auth:sanctum')->put('posts/post/{id}' , [PostController::class, 'update']);
+Route::middleware('auth:sanctum')->delete('posts/post/{id}', [PostController::class,'destroy']);
+
 
 
 Route::post('/register' , [AuthController::class,'register']);

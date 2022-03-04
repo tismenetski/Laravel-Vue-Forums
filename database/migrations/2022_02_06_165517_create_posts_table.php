@@ -21,8 +21,8 @@ class CreatePostsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->bigInteger('topic_id')->unsigned()->nullable();
             $table->foreign('topic_id')->references('id')->on('topics')->onDelete('cascade');
-            $table->bigInteger('upvotes');
-            $table->bigInteger('downvotes');
+            $table->bigInteger('upvotes')->default(0);
+            $table->bigInteger('downvotes')->default(0);
             $table->timestamps();
         });
     }
