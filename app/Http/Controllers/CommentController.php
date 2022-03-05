@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Post;
+use App\Models\User;
+use App\Notifications\NewComment;
+
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -48,6 +52,11 @@ class CommentController extends Controller
             'user_id' => $user->id
         ]);
 
+        $post = Post::findOrFail($request->get('post_id'));
+        $user_id  = $post->user_id;
+        $user = User::find($user_id);
+
+        $user->notify(new NewComment('New Comment To your post'));
 
         return response($comment, 201);
 

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Reply;
+use App\Models\User;
+use App\Notifications\NewReply;
 use Illuminate\Http\Request;
 
 class ReplyController extends Controller
@@ -33,15 +36,23 @@ class ReplyController extends Controller
 
         ]);
 
-        $comment = Reply::create([
+        $reply = Reply::create([
             'comment_id' => $request->get('comment_id'),
             'content' => $request->get('content'),
             'title' => $request->get('title'),
             'user_id' => $user->id
         ]);
 
+        $comment = Comment::findOrFail($request->get('comment_id'));
+        $user_id  = $comment->user_id;
+        $user = User::find($user_id);
 
-        return response($comment, 201);
+        $user->notify(new NewReply('New Reply To your comment'));
+
+        return response($reply, 201);
+
+
+        return response($reply, 201);
     }
 
     /**
