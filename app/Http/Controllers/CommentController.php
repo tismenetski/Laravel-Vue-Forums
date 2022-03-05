@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -11,9 +12,17 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $user = $request->user(); // this is a protected route - we want to make sure only auth users get this information
+
+        $request->validate([
+            'post_id' => 'exists:comments,post_id'
+        ]);
+
+        $comments = Comment::find('post_id' , $request->get('post_id'))->with('replies');
+
+        return response($comments, 200);
     }
 
     /**
@@ -21,9 +30,28 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $user = $request->user();
+
+       $request->validate([
+           'post_id' => 'required|exists:posts,id',
+           'content' => 'required|string',
+            'title' => 'required|string',
+
+        ]);
+
+        $comment = Comment::create([
+            'post_id' => $request->get('post_id'),
+            'content' => $request->get('content'),
+            'title' => $request->get('title'),
+            'user_id' => $user->id
+        ]);
+
+
+        return response($comment, 201);
+
+
     }
 
     /**
