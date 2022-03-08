@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
+
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Reply;
@@ -10,9 +10,7 @@ use App\Models\Tag;
 use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -35,12 +33,12 @@ class DatabaseSeeder extends Seeder
 //        });
 
         $this->call(CategorySeeder::class);
-        User::factory()->count(50)->create();
+        User::factory()->count(500)->create();
         Topic::factory()->count(20)->create();
-        Post::factory()->count(100)->create();
-        Tag::factory()->count(50)->create();
-        Comment::factory()->count(100)->create();
-        Reply::factory()->count(100)->create();
+        Post::factory()->count(1000)->create();
+        Tag::factory()->count(500)->create();
+        Comment::factory()->count(5000)->create();
+        Reply::factory()->count(10000)->create();
 
 
 //        DB::table('users')->insert([

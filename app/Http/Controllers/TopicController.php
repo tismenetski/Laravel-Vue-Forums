@@ -20,6 +20,11 @@ class TopicController extends Controller
 
     }
 
+    public function all(){
+        $topics = Topic::all();
+        return response($topics,200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

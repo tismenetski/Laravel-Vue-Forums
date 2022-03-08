@@ -16,7 +16,6 @@ class TopicFactory extends Factory
     {
         return [
             'name' => $this->faker->text(20),
-            'content' => $this->faker->sentences(10,true),
             'category_id' => Category::all()->random()->id,
 
         ];

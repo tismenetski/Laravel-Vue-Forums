@@ -39,6 +39,7 @@ Route::controller(TopicController::class)->prefix('topics')->group(function (){
     Route::get('/{category_id}', [TopicController::class,'index']);
     Route::post('/' , [TopicController::class, 'create']);
     Route::delete('/topic/{id}', [TopicController::class,'destroy']);
+    Route::get('/topic/all', [TopicController::class,'all']);
 });
 
 Route::controller(PostController::class)->prefix('posts')->group(function (){
@@ -47,6 +48,8 @@ Route::controller(PostController::class)->prefix('posts')->group(function (){
     Route::get('/post/{id}', [PostController::class, 'show']);
     Route::middleware('auth:sanctum')->put('/post/{id}' , [PostController::class, 'update']);
     Route::middleware('auth:sanctum')->delete('/post/{id}', [PostController::class,'destroy']);
+    Route::middleware('auth:sanctum')->get('/user/user_posts',[PostController::class,'user_posts']);
+    Route::get('/top/top_posts' , [PostController::class,'top_posts']);
 });
 
 Route::controller(CommentController::class)->prefix('comments')->group(function (){

@@ -20,6 +20,12 @@ class CategorySeeder extends Seeder
             ],
              [
                 'name' => 'Politics'
+            ],
+            [
+                'name' => 'General'
+            ],
+            [
+                'name' => 'programming'
             ]
         ];
 

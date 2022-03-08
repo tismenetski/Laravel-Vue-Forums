@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -117,6 +118,22 @@ class PostController extends Controller
         $post = Post::where(['user_id' => $user->id , 'id' => $id])->with('comments')->first(); // make sure the post belongs to the user
         $post->delete();
         return response(204);
+    }
+
+    public function user_posts(Request $request){
+
+        $user = $request->user();
+        $posts = Post::where(['user_id' => $user->id])->get();
+
+        return response($posts,200);
+
+    }
+
+
+    public function top_posts(Request $request){
+
+        $posts_with_recent_comments =  DB::table('posts')->select(DB::raw('posts.*,count(post_id) as number_of_comments'))->join('comments','posts.id','=', 'comments.post_id')->groupBy('id')->orderBy('number_of_comments','desc')->get();
+        return response($posts_with_recent_comments,200);
     }
 
 
