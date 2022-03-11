@@ -40,6 +40,7 @@ Route::controller(TopicController::class)->prefix('topics')->group(function (){
     Route::post('/' , [TopicController::class, 'create']);
     Route::delete('/topic/{id}', [TopicController::class,'destroy']);
     Route::get('/topic/all', [TopicController::class,'all']);
+    Route::get('/topic/{id}',[TopicController::class,'show']);
 });
 
 Route::controller(PostController::class)->prefix('posts')->group(function (){

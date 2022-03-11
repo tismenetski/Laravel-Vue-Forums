@@ -132,8 +132,18 @@ class PostController extends Controller
 
     public function top_posts(Request $request){
 
-        $posts_with_recent_comments =  DB::table('posts')->select(DB::raw('posts.*,count(post_id) as number_of_comments'))->join('comments','posts.id','=', 'comments.post_id')->groupBy('id')->orderBy('number_of_comments','desc')->get();
+        $posts_with_recent_comments =  DB::table('posts')
+        ->select(DB::raw('posts.*,users.username as username, count(post_id) as number_of_comments'))
+        ->join ('comments','posts.id','=', 'comments.post_id')
+        ->join('users','posts.user_id' , '=' , 'users.id')
+        ->groupBy('id')
+        ->orderBy('number_of_comments','desc')->get();
+
         return response($posts_with_recent_comments,200);
+    }
+
+    public function viewed_post(Request $request) {
+
     }
 
 
