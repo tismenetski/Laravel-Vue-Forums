@@ -35,10 +35,10 @@ class DatabaseSeeder extends Seeder
         $this->call(CategorySeeder::class);
         User::factory()->count(500)->create();
         Topic::factory()->count(20)->create();
-        Post::factory()->count(1000)->create();
-        Tag::factory()->count(500)->create();
-        Comment::factory()->count(5000)->create();
-        Reply::factory()->count(10000)->create();
+        Post::factory()->count(200)->create();
+        Tag::factory()->count(20)->create();
+        Comment::factory()->count(400)->create();
+        Reply::factory()->count(600)->create();
 
 
 //        DB::table('users')->insert([

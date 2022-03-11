@@ -22,6 +22,9 @@ class PostFactory extends Factory
             'content' => $this->faker->text(180),
             'user_id' => User::all()->random()->id,
             'topic_id' => Topic::all()->random()->id,
+            'views' => $this->faker->numberBetween(1,1000),
+            'pinned' => $this->faker->numberBetween(0,1),
+            'pinned_order' => $this->faker->numberBetween(-1,10),
             'upvotes' => 0,
             'downvotes' => 0
         ];

@@ -25,7 +25,13 @@ class CategorySeeder extends Seeder
                 'name' => 'General'
             ],
             [
-                'name' => 'programming'
+                'name' => 'Programming'
+            ],
+            [
+                'name' => 'Cooking'
+            ],
+            [
+                'name' => 'Relationships'
             ]
         ];
 
