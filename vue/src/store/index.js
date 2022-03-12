@@ -17,7 +17,8 @@ const store = createStore(
             topics :{
                 topics : [],
                 topic : null
-            }
+            },
+            loading : false,
         },
         getters : {},
         actions : {
@@ -36,23 +37,30 @@ const store = createStore(
                     })
             },
             topPosts({commit}) {
+                commit('startLoader');
                 return axiosClient.get('/posts/top/top_posts')
                     .then(({data}) => {
+
                         commit('setTopPosts', data);
+                        commit('stopLoader');
                         return data;
                     })
             },
             topics({commit}) {
+                commit('startLoader');
                 return axiosClient.get('/topics/topic/all')
                     .then(({data})=> {
                         commit('setTopics', data);
+                        commit('stopLoader');
                         return data;
                     })
             },
             getTopic({commit}, id) {
+                commit('startLoader');
                 return axiosClient.get(`/topics/topic/${id}`)
                     .then(({data}) => {
                         commit('setTopic', data);
+                        commit('stopLoader');
                         return data;
                     })
             }
@@ -71,7 +79,14 @@ const store = createStore(
             },
             setTopic(state,topicData) {
                 state.topics.topic = topicData;
+            },
+            startLoader(state) {
+                state.loading = true;
+            },
+            stopLoader(state) {
+                state.loading = false;
             }
+
         },
         modules : {}
     }

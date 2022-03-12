@@ -16,7 +16,9 @@
     "@tailwindcss/forms": "^0.4.0",
     "axios": "^0.25.0",
     "vue": "^3.2.25",
+    "vue-loading-overlay": "5.0",
     "vue-router": "^4.0.12",
+    "vue-spinner": "^1.0.4",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
