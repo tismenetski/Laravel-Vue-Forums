@@ -1,8 +1,10 @@
 <template>
 <div class="container">
+
     <h2 class="title">Recent Discussions on Stas Forums</h2>
-    <div class="main-content">
-        <div class="top_posts">
+    <loader v-if="loader"></loader>
+    <div v-else class="main-content">
+        <div class="posts">
             <table>
                 <table-head/>
                 <tbody v-for="(post,index) in topPosts" :key="index">
@@ -10,14 +12,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="forums">
-<!--            <h3 class="browse_forums_title">Browse Forums</h3>-->
-        <ul>
-            <li v-for="(topic,index) in topics" :key="index">
-                <router-link :to="{name: 'topic', params : {id:topic.id}}">{{topic.name}}</router-link>
-            </li>
-        </ul>
-        </div>
+        <browse-forums :topics="topics"></browse-forums>
     </div>
 </div>
 </template>
@@ -28,6 +23,8 @@ import {useRouter} from "vue-router";
 import {ref,computed} from "vue";
 import PostItem from '../components/PostItem.vue';
 import TableHead from '../components/TableHead.vue';
+import BrowseForums from '../components/BrowseForums.vue';
+import Loader from '../components/Loader.vue';
 const store = useStore();
 
 const router =useRouter();
@@ -36,6 +33,7 @@ store.dispatch('topPosts');
 store.dispatch('topics');
 const topPosts = computed(() => store.state.posts.topPosts);
 const topics = computed(() => store.state.topics.topics);
+const loader = computed(() => store.state.loading);
 
 
 </script>
@@ -43,7 +41,6 @@ const topics = computed(() => store.state.topics.topics);
 <style scoped>
 
 .container {
-
     margin: 0 auto;
 }
 
@@ -51,7 +48,7 @@ const topics = computed(() => store.state.topics.topics);
     padding-top: 100px;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
 table {
@@ -72,7 +69,11 @@ tbody tr:nth-child(even) {
     background: #f7fafc;
 }
 
-.top_posts {
+.posts {
     flex : 0 0 65%;
 }
+
+
+
+
 </style>

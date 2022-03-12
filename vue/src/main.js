@@ -11,10 +11,12 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 library.add(faThumbTack)
 library.add(faComment)
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import ClipLoader from 'vue-spinner/src/ClipLoader.vue';
 
 library.add(fas, far, fab)
 createApp(App)
     .use(store)
     .use(router)
     .component('font-awesome-icon', FontAwesomeIcon)
+    .component('clip-loader' , ClipLoader)
     .mount('#app')
