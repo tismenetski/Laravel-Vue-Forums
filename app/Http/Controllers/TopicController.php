@@ -64,7 +64,7 @@ class TopicController extends Controller
      */
     public function show($id)
     {
-        $topic = Topic::with('posts')->get()->find($id);
+        $topic = Topic::with('posts')->withCount('comments')->get()->find($id);
 
         return response($topic, 200);
     }

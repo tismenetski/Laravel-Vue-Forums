@@ -132,6 +132,9 @@ class PostController extends Controller
 
     public function top_posts(Request $request){
 
+
+        $posts = Post::with('user')->withCount('comments')->get();
+        return response($posts,200);
         $posts_with_recent_comments =  DB::table('posts')
         ->select(DB::raw('posts.*,users.username as username, count(post_id) as number_of_comments'))
         ->join ('comments','posts.id','=', 'comments.post_id')

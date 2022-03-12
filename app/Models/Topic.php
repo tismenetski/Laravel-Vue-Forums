@@ -19,6 +19,14 @@ class Topic extends Model
     }
 
     public function posts() {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class)->with(['user' => function($query){
+            $query->select( 'id' ,'username');
+        }]);
     }
+
+    public function comments() {
+        return $this->hasManyThrough(Comment::class,Post::class );
+    }
+
+
 }
