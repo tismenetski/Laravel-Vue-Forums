@@ -14,6 +14,10 @@ class Comment extends Model
     'post_id', 'user_id' , 'title', 'content'
     ];
 
+    protected $with  = [
+        'replies', 'user'
+    ];
+
 
     public function post() {
         return $this->belongsTo(Post::class);
@@ -21,5 +25,9 @@ class Comment extends Model
 
     public function replies() {
         return $this->hasMany(Reply::class);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 }

@@ -14,10 +14,17 @@ class Reply extends Model
         'comment_id', 'user_id' , 'title', 'content'
     ];
 
+    protected $with  = [
+         'user'
+    ];
 
 
 
     public function comment() {
        return $this->belongsTo(Comment::class);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 }

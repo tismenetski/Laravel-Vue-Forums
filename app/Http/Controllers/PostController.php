@@ -68,7 +68,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::where(['id' => $id])->with('comments')->with('replies')->get();
+        $post = Post::where(['id' => $id])->with('comments')->with('user')->first();
         return response($post,200 );
     }
 
