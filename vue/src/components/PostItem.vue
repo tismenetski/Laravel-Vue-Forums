@@ -1,6 +1,6 @@
 <template>
     <tr>
-        <td><span v-if="post.pinned===1"> <font-awesome-icon icon="thumbtack" size="1x"/> </span>{{post.title}}</td>
+        <td><span v-if="post.pinned===1"> <font-awesome-icon icon="thumbtack" size="1x"/> </span><router-link :to="{name : 'post', params : {id : post.id}}">{{post.title}}</router-link></td>
         <td>{{post.user.username}}</td>
         <td>08.03.2022</td>
         <td>{{post.comments_count}}</td>

@@ -14,11 +14,17 @@ import {useStore} from "vuex";
 
 const store = useStore();
 
-
+// This takes as props all the available topics
 const props = defineProps({
     'topics' : Object
 })
 
+
+/**
+ * Function sends a request to the store to go get the topic that was clicked before moving to the desired page
+ * @param event
+ * @param topic
+ */
 function getTopic(event,topic) {
 
     const topicId = topic.id;

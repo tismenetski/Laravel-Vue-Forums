@@ -1,6 +1,5 @@
 <template>
 <div class="container">
-
     <h2 class="title">Recent Discussions on Stas Forums</h2>
     <loader v-if="loader"></loader>
     <div v-else class="main-content">
@@ -72,8 +71,4 @@ tbody tr:nth-child(even) {
 .posts {
     flex : 0 0 65%;
 }
-
-
-
-
 </style>

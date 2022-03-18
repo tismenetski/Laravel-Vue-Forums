@@ -12,7 +12,8 @@ const store = createStore(
                 token : sessionStorage.getItem('TOKEN')
             },
             posts : {
-                topPosts : []
+                topPosts : [],
+                post : null
             },
             topics :{
                 topics : [],
@@ -63,6 +64,15 @@ const store = createStore(
                         commit('stopLoader');
                         return data;
                     })
+            },
+            getPost({commit}, id) {
+                commit('startLoader');
+                return axiosClient.get(`/posts/post/${id}`)
+                    .then(({data}) =>{
+                        commit('setPost' , data);
+                        commit('stopLoader');
+                        return data;
+                    })
             }
         },
         mutations : {
@@ -85,6 +95,9 @@ const store = createStore(
             },
             stopLoader(state) {
                 state.loading = false;
+            },
+            setPost(state,postData) {
+                state.posts.post = postData;
             }
 
         },
