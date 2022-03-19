@@ -22,6 +22,10 @@
                         <input v-model="user.email" id="email-address" name="email" type="email" autocomplete="email" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address" />
                     </div>
                     <div>
+                        <label for="username" class="sr-only">Username</label>
+                        <input v-model="user.username" id="username" name="username" type="text" autocomplete="username" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username" />
+                    </div>
+                    <div>
                         <label for="password" class="sr-only">Password</label>
                         <input v-model="user.password" id="password" name="password" type="password" autocomplete="current-password" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" />
                     </div>
@@ -62,6 +66,7 @@ const router = useRouter();
 const user  = {
     name : '',
     email : '',
+    username: '',
     password : '',
     password_confirmation : ''
 };

@@ -40,11 +40,6 @@ const routes = [
 
       ]
     },
-    // {
-    //     path : '/',
-    //     name  : 'dashboard',
-    //     component : Dashboard
-    // },
     {
         path: '/register',
         name: 'register',
@@ -55,9 +50,6 @@ const routes = [
         name: 'login',
         component: Login
     },
-
-
-
 ]
 
 
