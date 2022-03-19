@@ -16,6 +16,14 @@ class Post extends Model
         'title', 'content' , 'user_id' , 'topic_id'
     ];
 
+    protected $appends = ['votes'];
+
+    public function getVotesAttribute() {
+        return $this->getAttribute('upvotes')- $this->getAttribute('downvotes');
+    }
+
+
+
     public function user() {
         return $this->belongsTo(User::class);
     }

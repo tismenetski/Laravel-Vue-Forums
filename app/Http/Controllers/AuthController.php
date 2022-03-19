@@ -21,6 +21,7 @@ class AuthController extends Controller
         $data  = $request->validate([
             'name' => 'string|required',
             'email' => 'required|string|email|unique:users,email',
+            'username' => 'required|string|unique:users,username',
             'password' => ['required','confirmed', Password::min(8)->mixedCase()->numbers()->symbols()]
         ]);
 
@@ -28,6 +29,7 @@ class AuthController extends Controller
         $user = User::create([
            'name' => $data['name'],
            'email' => $data['email'],
+           'username' => $data['username'],
            'password' => bcrypt($data['password'])
         ]);
 
