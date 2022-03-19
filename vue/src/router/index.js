@@ -7,14 +7,44 @@ import Login from "../views/Login.vue";
 import Forums from '../views/Forums.vue';
 import Post from '../views/Post.vue';
 import Topic from "../views/Topic.vue";
+import DefaultLayout from "../components/DefaultLayout.vue";
 
 
 const routes = [
+
     {
-        path : '/',
-        name  : 'dashboard',
-        component : Dashboard
+      path :'/',
+      redirect: '/forums',
+      component: DefaultLayout,
+      children : [
+          {
+              path : '/dashboard',
+              name  : 'dashboard',
+              component : Dashboard
+          },
+          {
+              path: '/',
+              name: 'forums',
+              component: Forums
+          },
+          {
+              path: '/topic/:id',
+              name: 'topic',
+              component: Topic
+          },
+          {
+              path: '/post/:id',
+              name: 'post',
+              component: Post
+          },
+
+      ]
     },
+    // {
+    //     path : '/',
+    //     name  : 'dashboard',
+    //     component : Dashboard
+    // },
     {
         path: '/register',
         name: 'register',
@@ -25,21 +55,7 @@ const routes = [
         name: 'login',
         component: Login
     },
-    {
-        path: '/forums',
-        name: 'forums',
-        component: Forums
-    },
-    {
-        path: '/topic/:id',
-        name: 'topic',
-        component: Topic
-    },
-    {
-        path: '/post/:id',
-        name: 'post',
-        component: Post
-    },
+
 
 
 ]
