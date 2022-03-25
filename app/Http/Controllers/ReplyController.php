@@ -32,14 +32,12 @@ class ReplyController extends Controller
         $request->validate([
             'comment_id' => 'required|exists:comments,id',
             'content' => 'required|string',
-            'title' => 'required|string',
 
         ]);
 
         $reply = Reply::create([
             'comment_id' => $request->get('comment_id'),
             'content' => $request->get('content'),
-            'title' => $request->get('title'),
             'user_id' => $user->id
         ]);
 
@@ -48,9 +46,6 @@ class ReplyController extends Controller
         $user = User::find($user_id);
 
         $user->notify(new NewReply('New Reply To your comment'));
-
-        return response($reply, 201);
-
 
         return response($reply, 201);
     }
@@ -69,8 +64,7 @@ class ReplyController extends Controller
 
         //$post = Post::with('comments')->find(['user_id' => $user->id , 'id' => $id]);
         $data = $request->validate([
-            'title' => 'required|string',
-            'content' => 'string'
+            'content' => 'required|string'
         ]);
 
         $reply->update($data);

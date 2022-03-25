@@ -17,7 +17,6 @@ class ReplyFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->text(30),
             'content' => $this->faker->text(180),
             'user_id' => User::all()->random()->id,
             'comment_id' => Comment::all()->random()->id,

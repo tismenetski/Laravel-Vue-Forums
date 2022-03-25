@@ -19,7 +19,6 @@ class CreateCommentsTable extends Migration
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('title');
             $table->longText('content');
             $table->bigInteger('upvotes')->default(0);
             $table->bigInteger('downvotes')->default(0);

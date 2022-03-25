@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Notifications\NewComment;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CommentController extends Controller
 {
@@ -36,19 +37,18 @@ class CommentController extends Controller
      */
     public function create(Request $request)
     {
+        Log::info(print_r($request->all()));
         $user = $request->user();
 
        $request->validate([
            'post_id' => 'required|exists:posts,id',
            'content' => 'required|string',
-            'title' => 'required|string',
 
         ]);
 
         $comment = Comment::create([
             'post_id' => $request->get('post_id'),
             'content' => $request->get('content'),
-            'title' => $request->get('title'),
             'user_id' => $user->id
         ]);
 
