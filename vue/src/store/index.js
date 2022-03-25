@@ -73,6 +73,22 @@ const store = createStore(
                         commit('stopLoader');
                         return data;
                     })
+            },
+            postComment({commit}, data) {
+                commit('startLoader');
+                return axiosClient.post('/comments',data)
+                    .then(({data}) => {
+                        commit('stopLoader');
+                        return data;
+                    })
+            },
+            postReply({commit}, data) {
+                commit('startLoader');
+                return axiosClient.post('/replies',data)
+                    .then(({data}) => {
+                        commit('stopLoader');
+                        return data;
+                    })
             }
         },
         mutations : {
