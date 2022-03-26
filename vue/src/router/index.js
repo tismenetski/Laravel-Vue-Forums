@@ -7,7 +7,9 @@ import Login from "../views/Login.vue";
 import Forums from '../views/Forums.vue';
 import Post from '../views/Post.vue';
 import Topic from "../views/Topic.vue";
+import CreatePost from "../views/CreatePost.vue";
 import DefaultLayout from "../components/DefaultLayout.vue";
+
 
 
 const routes = [
@@ -37,6 +39,11 @@ const routes = [
               name: 'post',
               component: Post
           },
+          {
+              path : '/topic/:id/createPost',
+              name : 'createPost',
+              component:  CreatePost
+          }
 
       ]
     },

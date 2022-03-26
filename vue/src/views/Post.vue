@@ -28,17 +28,7 @@
                         </div>
                 </div>
                 <div v-for="(comment,indexComment) in post.comments" class="post-comments" :key="indexComment">
-                    <div class="single-comment">
-                        <div class="comment-votes">
-                            <font-awesome-icon icon="caret-up" size="2x" />
-                            <p class="post-votes-result">{{comment.votes}}</p>
-                            <font-awesome-icon icon="caret-down" size="2x" />
-                        </div>
-                        <div class="post-comment">
-                            <h4 class="post-header">#{{indexComment+2}} {{comment.user.username}}</h4>
-                            {{comment.content}}
-                        </div>
-                    </div>
+                    <single-comment :index-comment="indexComment" :comment="comment"></single-comment>
                     <div v-if="token"   class="post-actions" >
                     <textarea name="reply"
                               id="reply"
@@ -70,6 +60,7 @@
 
 <script setup>
 import Loader from '../components/Loader.vue';
+import SingleComment from '../components/SingleComment.vue';
 import {useStore} from "vuex";
 import {useRoute} from "vue-router";
 import {computed, ref} from "vue";
@@ -95,6 +86,11 @@ const replyToCommentId = ref(null);
 const activeReply = ref(-1);
 const activeComment = ref(-1);
 
+
+
+
+
+
 function toggleShowComment(){
     showComment.value = !showComment.value;
     if (showComment) {
@@ -114,6 +110,10 @@ function markActiveReply(index,comment) {
 function currentReply(index) {
     return activeReply.value === index;
 }
+
+
+
+
 
 async function submitReply(){
 
@@ -167,7 +167,7 @@ async function submitComment() {
     color : dodgerblue;
 }
 
-.post-votes , .comment-votes, .reply-votes {
+.post-votes , .reply-votes {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -175,7 +175,7 @@ async function submitComment() {
     padding: 10px 20px 10px 20px;
 }
 
-.post-votes , .comment-votes, .reply-votes p {
+.post-votes , .reply-votes p {
     min-width: 30px;
     text-align: center;
 }
@@ -195,14 +195,6 @@ async function submitComment() {
     background-color: rgb(44, 62, 80) ;
     color : #fff;
     border-radius: 5px;
-}
-
-.single-comment {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 30px;
 }
 
 .post-comment-replies {

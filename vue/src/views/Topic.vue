@@ -3,6 +3,7 @@
         <h2 class="title">Recent Discussions on Stas Forums</h2>
         <loader v-if="loader"></loader>
         <div v-else class="main-content">
+            <router-link :to="{ name : 'createPost' , params : {id : topic.id}}">Create Post</router-link>
             <div class="posts">
                 <table>
                     <table-head/>
@@ -29,13 +30,17 @@ const store= useStore();
 const route = useRoute();
 
 
+
 // go get the topic with the posts
 store.dispatch('getTopic',route.params.id);
 store.dispatch('topics');
 
+
+
+const loader = computed(() => store.state.loading);
 const topic = computed(() =>store.state.topics.topic);
 const topics = computed(() => store.state.topics.topics);
-const loader = computed(() => store.state.loading);
+
 
 
 </script>

@@ -89,6 +89,14 @@ const store = createStore(
                         commit('stopLoader');
                         return data;
                     })
+            },
+            postPost({commit}, data) {
+                commit('startLoader');
+                return axiosClient.post('/posts',data)
+                    .then(({data}) => {
+                        commit('stopLoader');
+                        return data;
+                    })
             }
         },
         mutations : {
