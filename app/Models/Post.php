@@ -18,6 +18,8 @@ class Post extends Model
 
     protected $appends = ['votes'];
 
+    protected $with = ['comments'];
+
     public function getVotesAttribute() {
         return $this->getAttribute('upvotes')- $this->getAttribute('downvotes');
     }
