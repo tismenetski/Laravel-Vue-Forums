@@ -4,17 +4,18 @@
         <div  v-else class="main">
             <h2 class="post-title">{{post.title}}</h2>
             <div class="posts-content">
-                <div class="single-post">
-                    <div class="post-votes">
-                        <button @click="upvotePost()" :disabled="post.user_id=== user.id"> <font-awesome-icon icon="caret-up" size="2x" /></button>
-                        <p class="post-votes-result">{{post.upvotes.length - post.downvotes.length}}</p>
-                        <button @click="downvotePost()" :disabled="post.user_id=== user.id">   <font-awesome-icon icon="caret-down" size="2x" /></button>
-                    </div>
-                        <div class="post-content">
-                            <h4 class="post-header">#1    {{post.user.username}}</h4>
-                            <div>{{post.content}}</div>
-                        </div>
-                </div>
+                <single-post :post="post" :user="user"></single-post>
+<!--                <div class="single-post">-->
+<!--                    <div class="post-votes">-->
+<!--                        <button @click="upvotePost()" :disabled="post.user_id=== user.id"> <font-awesome-icon icon="caret-up" size="2x" /></button>-->
+<!--                        <p class="post-votes-result">{{post.upvotes.length - post.downvotes.length}}</p>-->
+<!--                        <button @click="downvotePost()" :disabled="post.user_id=== user.id">   <font-awesome-icon icon="caret-down" size="2x" /></button>-->
+<!--                    </div>-->
+<!--                        <div class="post-content">-->
+<!--                            <h4 class="post-header">#1    {{post.user.username}}</h4>-->
+<!--                            <div>{{post.content}}</div>-->
+<!--                        </div>-->
+<!--                </div>-->
                 <div v-if="token"   class="post-actions" >
                     <textarea name="comment"
                               id="comment"
@@ -42,15 +43,7 @@
                         </div>
                     </div>
                     <div v-for="(reply,indexReply) in comment.replies" class="post-comment-replies" :key="indexReply">
-                        <div class="reply-votes">
-                            <button @click="upvoteReply(reply.id)" :disabled="reply.user_id=== user.id">  <font-awesome-icon icon="caret-up" size="2x" /> </button>
-                            <p class="post-votes-result">{{reply.upvotes.length - reply.downvotes.length}}</p>
-                            <button @click="downvoteReply(reply.id)" :disabled="reply.user_id=== user.id"> <font-awesome-icon icon="caret-down" size="2x" /> </button>
-                        </div>
-                        <div class="post-reply">
-                            <h4 class="post-header">#{{indexComment+2}}.{{indexReply+1}} {{reply.user.username}}</h4>
-                            {{reply.content}}
-                        </div>
+                        <single-reply :index-comment="indexComment" :index-reply="indexReply" :reply="reply"></single-reply>
                     </div>
                 </div>
             </div>
@@ -61,6 +54,8 @@
 <script setup>
 import Loader from '../components/Loader.vue';
 import SingleComment from '../components/SingleComment.vue';
+import SingleReply from '../components/SingleReply.vue';
+import SinglePost from '../components/SinglePost.vue';
 import {useStore} from "vuex";
 import {useRoute} from "vue-router";
 import {computed, ref} from "vue";
@@ -159,29 +154,6 @@ async function downvotePost() {
     await store.dispatch('getPost', route.params.id);
 }
 
-
-async function upvoteReply(id) {
-
-    const data = {
-        reply_id : id,
-        value : 1
-    }
-
-    await store.dispatch('upvoteReply', data);
-    await store.dispatch('getPost', route.params.id);
-}
-
-async function downvoteReply(id) {
-
-    const data = {
-        reply_id : id,
-        value : -1
-    }
-
-    await store.dispatch('downvoteReply', data);
-    await store.dispatch('getPost', route.params.id);
-}
-
 </script>
 
 <style scoped>
@@ -212,7 +184,7 @@ async function downvoteReply(id) {
     color : dodgerblue;
 }
 
-.post-votes , .reply-votes {
+.post-votes {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -220,7 +192,7 @@ async function downvoteReply(id) {
     padding: 10px 20px 10px 20px;
 }
 
-.post-votes , .reply-votes p {
+.post-votes {
     min-width: 30px;
     text-align: center;
 }
