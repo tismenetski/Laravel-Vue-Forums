@@ -97,7 +97,61 @@ const store = createStore(
                         commit('stopLoader');
                         return data;
                     })
-            }
+            },
+            upvotePost({commit}, data) {
+                commit('startLoader');
+                return axiosClient.post('/posts/vote', data)
+                    .then(({data})=> {
+                    commit('stopLoader');
+                    return data;
+                })
+
+            },
+            downvotePost({commit}, data) {
+                commit('startLoader');
+                return axiosClient.post('/posts/vote', data)
+                    .then(({data})=> {
+                        commit('stopLoader');
+                        return data;
+                    })
+
+            },
+            upvoteReply({commit}, data) {
+                commit('startLoader');
+                return axiosClient.post('/replies/vote', data)
+                    .then(({data})=> {
+                        commit('stopLoader');
+                        return data;
+                    })
+
+            },
+            downvoteReply({commit}, data) {
+                commit('startLoader');
+                return axiosClient.post('/replies/vote', data)
+                    .then(({data})=> {
+                        commit('stopLoader');
+                        return data;
+                    })
+
+            },
+            upvoteComment({commit}, data) {
+                commit('startLoader');
+                return axiosClient.post('/comments/vote', data)
+                    .then(({data})=> {
+                        commit('stopLoader');
+                        return data;
+                    })
+
+            },
+            downvoteComment({commit}, data) {
+                commit('startLoader');
+                return axiosClient.post('/comments/vote', data)
+                    .then(({data})=> {
+                        commit('stopLoader');
+                        return data;
+                    })
+
+            },
         },
         mutations : {
             setUser : (state,userData) => {

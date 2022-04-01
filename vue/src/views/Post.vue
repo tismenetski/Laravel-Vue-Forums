@@ -6,9 +6,9 @@
             <div class="posts-content">
                 <div class="single-post">
                     <div class="post-votes">
-                        <font-awesome-icon icon="caret-up" size="2x" />
-                        <p class="post-votes-result">{{post.votes}}</p>
-                        <font-awesome-icon icon="caret-down" size="2x" />
+                        <button @click="upvotePost()" :disabled="post.user_id=== user.id"> <font-awesome-icon icon="caret-up" size="2x" /></button>
+                        <p class="post-votes-result">{{post.upvotes.length - post.downvotes.length}}</p>
+                        <button @click="downvotePost()" :disabled="post.user_id=== user.id">   <font-awesome-icon icon="caret-down" size="2x" /></button>
                     </div>
                         <div class="post-content">
                             <h4 class="post-header">#1    {{post.user.username}}</h4>
@@ -43,9 +43,9 @@
                     </div>
                     <div v-for="(reply,indexReply) in comment.replies" class="post-comment-replies" :key="indexReply">
                         <div class="reply-votes">
-                            <font-awesome-icon icon="caret-up" size="2x" />
-                            <p class="post-votes-result">{{reply.votes}}</p>
-                            <font-awesome-icon icon="caret-down" size="2x" />
+                            <button @click="upvoteReply(reply.id)" :disabled="reply.user_id=== user.id">  <font-awesome-icon icon="caret-up" size="2x" /> </button>
+                            <p class="post-votes-result">{{reply.upvotes.length - reply.downvotes.length}}</p>
+                            <button @click="downvoteReply(reply.id)" :disabled="reply.user_id=== user.id"> <font-awesome-icon icon="caret-down" size="2x" /> </button>
                         </div>
                         <div class="post-reply">
                             <h4 class="post-header">#{{indexComment+2}}.{{indexReply+1}} {{reply.user.username}}</h4>
@@ -75,7 +75,7 @@ const loader = computed(() => store.state.loading);
 const post = computed(() =>store.state.posts.post);
 const topics = computed(() => store.state.topics.topics);
 const token = computed(() =>store.state.user.token);
-
+const user = computed(() => store.state.user);
 
 
 
@@ -134,6 +134,51 @@ async function submitComment() {
      }
 
     await store.dispatch('postComment', data);
+    await store.dispatch('getPost', route.params.id);
+}
+
+async function upvotePost() {
+
+    const data = {
+        post_id : this.post.id,
+        value : 1
+    }
+
+    await store.dispatch('upvotePost', data);
+    await store.dispatch('getPost', route.params.id);
+}
+
+async function downvotePost() {
+
+    const data = {
+        post_id : this.post.id,
+        value : -1
+    }
+
+    await store.dispatch('downvotePost', data);
+    await store.dispatch('getPost', route.params.id);
+}
+
+
+async function upvoteReply(id) {
+
+    const data = {
+        reply_id : id,
+        value : 1
+    }
+
+    await store.dispatch('upvoteReply', data);
+    await store.dispatch('getPost', route.params.id);
+}
+
+async function downvoteReply(id) {
+
+    const data = {
+        reply_id : id,
+        value : -1
+    }
+
+    await store.dispatch('downvoteReply', data);
     await store.dispatch('getPost', route.params.id);
 }
 
