@@ -19,11 +19,11 @@ class Comment extends Model
     ];
 
 
-    protected $appends = ['votes'];
+    //protected $appends = ['votes'];
 
-    public function getVotesAttribute() {
-        return $this->getAttribute('upvotes')- $this->getAttribute('downvotes');
-    }
+//    public function getVotesAttribute() {
+//        return $this->getAttribute('upvotes')- $this->getAttribute('downvotes');
+//    }
 
 
     public function post() {

@@ -18,11 +18,11 @@ class Reply extends Model
          'user', 'upvotes', 'downvotes'
     ];
 
-    protected $appends = ['votes'];
+    //protected $appends = ['votes'];
 
-    public function getVotesAttribute() {
-        return $this->getAttribute('upvotes')- $this->getAttribute('downvotes');
-    }
+//    public function getVotesAttribute() {
+//        return $this->getAttribute('upvotes')- $this->getAttribute('downvotes');
+//    }
 
 
 
