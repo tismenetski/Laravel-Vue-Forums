@@ -30,13 +30,13 @@ const store= useStore();
 const route = useRoute();
 
 
+async function getTopicData() {
+    // go get the topic with the posts
+  await  store.dispatch('getTopic',route.params.id);
+   await store.dispatch('topics');
+}
 
-// go get the topic with the posts
-store.dispatch('getTopic',route.params.id);
-store.dispatch('topics');
-
-
-
+getTopicData();
 const loader = computed(() => store.state.loading);
 const topic = computed(() =>store.state.topics.topic);
 const topics = computed(() => store.state.topics.topics);
