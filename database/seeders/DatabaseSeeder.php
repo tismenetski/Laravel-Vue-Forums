@@ -4,8 +4,11 @@ namespace Database\Seeders;
 
 
 use App\Models\Comment;
+use App\Models\CommentVote;
 use App\Models\Post;
+use App\Models\PostVote;
 use App\Models\Reply;
+use App\Models\ReplyVote;
 use App\Models\Tag;
 use App\Models\Topic;
 use App\Models\User;
@@ -39,6 +42,9 @@ class DatabaseSeeder extends Seeder
         Tag::factory()->count(20)->create();
         Comment::factory()->count(400)->create();
         Reply::factory()->count(600)->create();
+        PostVote::factory()->count(2000)->create();
+        CommentVote::factory()->count(4000)->create();
+        ReplyVote::factory()->count(5000)->create();
 
 
 //        DB::table('users')->insert([
