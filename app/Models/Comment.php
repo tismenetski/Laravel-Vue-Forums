@@ -15,7 +15,7 @@ class Comment extends Model
     ];
 
     protected $with  = [
-        'replies', 'user'
+        'replies', 'user', 'upvotes', 'downvotes'
     ];
 
 
@@ -36,5 +36,12 @@ class Comment extends Model
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function upvotes() {
+        return $this->hasMany(CommentVote::class)->where('value' , '=', 1);
+    }
+    public function downvotes() {
+        return $this->hasMany(CommentVote::class)->where('value' , '=', -1);
     }
 }

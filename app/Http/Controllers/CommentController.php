@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\CommentVote;
 use App\Models\Post;
 use App\Models\User;
 use App\Notifications\NewComment;
@@ -117,5 +118,34 @@ class CommentController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function vote(Request $request) {
+
+        $user = $request->user();
+
+        $request->validate([
+            'value' => ['required', 'in:1,0,-1'],
+            'comment_id' => ['required' , 'exists:comments,id'],
+        ]);
+
+        $vote = CommentVote::where(['comment_id' => $request->get('comment_id'), 'user_id' => $user->id])->first();
+        if (empty($vote)) {
+            CommentVote::create([
+                'user_id' => $user->id,
+                'comment_id' => $request->get('comment_id'),
+                'value' => $request->get('value')
+            ]);
+            return response('', 201);
+        } else if ($vote['value'] === $request->get('value')) {
+            return response(['message' => 'user cannot vote twice on same comment'], 403);
+        } else if($vote['value'] !== $request->get('value')) {
+            $vote->update([
+                'value' => $request->get('value') + $vote['value']
+            ]);
+            return response('', 201);
+        } else {
+            return response(['message' => 'Something went wrong'], 400);
+        }
     }
 }

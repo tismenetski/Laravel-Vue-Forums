@@ -15,7 +15,7 @@ class Reply extends Model
     ];
 
     protected $with  = [
-         'user'
+         'user', 'upvotes', 'downvotes'
     ];
 
     protected $appends = ['votes'];
@@ -32,5 +32,12 @@ class Reply extends Model
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function upvotes() {
+        return $this->hasMany(ReplyVote::class)->where('value' , '=', 1);
+    }
+    public function downvotes() {
+        return $this->hasMany(ReplyVote::class)->where('value' , '=', -1);
     }
 }

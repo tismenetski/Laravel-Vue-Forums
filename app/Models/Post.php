@@ -16,13 +16,15 @@ class Post extends Model
         'title', 'content' , 'user_id' , 'topic_id'
     ];
 
-    protected $appends = ['votes'];
+    //protected $appends = ['votes'];
 
-    protected $with = ['comments'];
+    protected $with = ['comments' , 'upvotes', 'downvotes'];
 
-    public function getVotesAttribute() {
-        return $this->getAttribute('upvotes')- $this->getAttribute('downvotes');
-    }
+
+
+//    public function getVotesAttribute() {
+//        return $this->getAttribute('upvotes')- $this->getAttribute('downvotes');
+//    }
 
 
 
@@ -40,5 +42,12 @@ class Post extends Model
 
     public function replies(){
         return $this->hasManyThrough(Reply::class,Comment::class);
+    }
+
+    public function upvotes() {
+        return $this->hasMany(PostVote::class)->where('value' , '=', 1);
+    }
+    public function downvotes() {
+        return $this->hasMany(PostVote::class)->where('value' , '=', -1);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\PostVote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -42,6 +43,12 @@ class PostController extends Controller
                 'content' => $request->get('content'),
                 'user_id' => $user->id,
                 'topic_id' => $request->get('topic_id')
+        ]);
+
+        PostVote::create([
+            'value' => 1,
+            'user_id' => $user->id,
+            'post_id' => $post['id']
         ]);
 
 
@@ -149,8 +156,32 @@ class PostController extends Controller
 
     }
 
+    public function vote(Request $request) {
 
+        $user = $request->user();
 
+        $request->validate([
+            'value' => ['required', 'in:1,0,-1'],
+            'post_id' => ['required' , 'exists:posts,id'],
+        ]);
 
-
+        $vote = PostVote::where(['post_id' => $request->get('post_id'), 'user_id' => $user->id])->first();
+        if (empty($vote)) {
+                  PostVote::create([
+                'user_id' => $user->id,
+                'post_id' => $request->get('post_id'),
+                'value' => $request->get('value')
+            ]);
+            return response('', 201);
+        } else if ($vote['value'] === $request->get('value')) {
+            return response(['message' => 'user cannot vote twice on same post'], 403);
+        } else if($vote['value'] !== $request->get('value')) {
+            $vote->update([
+                'value' => $request->get('value') + $vote['value']
+            ]);
+            return response('', 201);
+        } else {
+            return response(['message' => 'Something went wrong'], 400);
+        }
+    }
 }
