@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\TopicController;
@@ -65,3 +66,13 @@ Route::controller(ReplyController::class)->prefix('replies')->group(function (){
     Route::middleware('auth:sanctum')->put('/reply/{id}', [ReplyController::class,'update']);
     Route::middleware('auth:sanctum')->post('/vote', [ReplyController::class,'vote']);
 });
+
+Route::controller(NotificationController::class)->prefix('notifications')->group(function (){
+    Route::middleware('auth:sanctum')->get('/', [NotificationController::class,'getNotifications']);
+
+});
+
+Route::post('/password/email', [AuthController::class,'sendPasswordResetLinkEmail'])->middleware('throttle:5,1')->name('password.email');
+Route::post('/password/reset', [AuthController::class,'resetPassword'])->name('password.reset');
+
+
