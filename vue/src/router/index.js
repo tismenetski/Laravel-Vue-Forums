@@ -9,7 +9,8 @@ import Post from '../views/Post.vue';
 import Topic from "../views/Topic.vue";
 import CreatePost from "../views/CreatePost.vue";
 import DefaultLayout from "../components/DefaultLayout.vue";
-
+import ForgotPassword from "../views/ForgotPassword.vue";
+import ResetPassword from "../views/ResetPassword.vue";
 
 
 const routes = [
@@ -57,6 +58,16 @@ const routes = [
         name: 'login',
         component: Login
     },
+    {
+        path: '/forgot-password',
+        name: 'forgotPassword',
+        component: ForgotPassword
+    },
+    {
+        path:'/reset-password',
+        name : 'resetPassword',
+        component: ResetPassword
+    }
 ]
 
 

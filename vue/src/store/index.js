@@ -11,6 +11,7 @@ const store = createStore(
                 },
                 token : sessionStorage.getItem('TOKEN')
             },
+            notifications :[],
             posts : {
                 topPosts : [],
                 post : null
@@ -150,8 +151,34 @@ const store = createStore(
                         commit('stopLoader');
                         return data;
                     })
-
             },
+            getNotifications({commit}) {
+                commit('startLoader');
+                return axiosClient.get('/notifications')
+                    .then(({data})=> {
+                        commit('setNotifications', data)
+                        commit('stopLoader');
+                        return data;
+                    })
+            },
+            sendResetPasswordLink({commit} , data) {
+                commit('startLoader');
+                return axiosClient.post('/password/email',data)
+                    .then(({data})=> {
+                        console.log(data)
+                        commit('stopLoader');
+                        return data;
+                    })
+            },
+            resetPassword({commit} , data) {
+                commit('startLoader');
+                return axiosClient.post('/password/reset',data)
+                    .then(({data})=> {
+                        console.log(data)
+                        commit('stopLoader');
+                        return data;
+                    })
+            }
         },
         mutations : {
             setUser : (state,userData) => {
@@ -176,6 +203,9 @@ const store = createStore(
             },
             setPost(state,postData) {
                 state.posts.post = postData;
+            },
+            setNotifications(state,notificationsData) {
+                state.notifications = notificationsData
             }
 
         },
