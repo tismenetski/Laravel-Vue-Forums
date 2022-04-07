@@ -19,6 +19,7 @@
     "vue-loading-overlay": "5.0",
     "vue-router": "^4.0.12",
     "vue-spinner": "^1.0.4",
+    "vue-toastification": "^2.0.0-rc.5",
     "vuex": "^4.0.2"
   },
   "devDependencies": {

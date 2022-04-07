@@ -50,10 +50,10 @@
 <script setup>
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
-
+import { useToast,POSITION } from "vue-toastification";
 
 const store = useStore();
-
+const toast = useToast();
 const router = useRouter();
 
 
@@ -66,6 +66,10 @@ const user = {
 function login(ev) {
     ev.preventDefault();
     store.dispatch('login', user).then(() => {
+        toast.success("Logged In Successfully", {
+            timeout: 2000,
+            position: POSITION.BOTTOM_LEFT
+        });
         router.push('/');
     })
     .catch((err) => {
