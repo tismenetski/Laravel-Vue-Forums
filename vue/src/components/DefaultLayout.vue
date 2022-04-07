@@ -17,7 +17,8 @@
                         <div v-if="token" class="ml-4 flex items-center md:ml-6">
                             <button type="button" class="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                                 <span class="sr-only">View notifications</span>
-                                <BellIcon class="h-6 w-6" aria-hidden="true" />
+                                <BellIcon id="bell" class="h-6 w-6" aria-hidden="true" />
+                                <span v-if="notifications.length > 0" class="badge">{{notifications.length}}</span>
                             </button>
 
                             <!-- Profile dropdown -->
@@ -31,7 +32,7 @@
                                 <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                                     <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                                         <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
-                                            <a :href="item.href" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">{{ item.name }}</a>
+                                            <a :href="item.href" @click="handle_function_call(item.function)" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">{{ item.name }}</a>
                                         </MenuItem>
                                     </MenuItems>
                                 </transition>
@@ -73,6 +74,7 @@
                         <button type="button" class="ml-auto bg-gray-800 flex-shrink-0 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                             <span class="sr-only">View notifications</span>
                             <BellIcon class="h-6 w-6" aria-hidden="true" />
+                            <span v-if="notifications.length > 0" class="badge">{{notifications.length}}</span>
                         </button>
                     </div>
                     <div class="mt-3 px-2 space-y-1">
@@ -109,59 +111,84 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline'
-import {computed} from "vue";
+import {computed,ref,onBeforeMount} from "vue";
 import {useStore} from "vuex";
+import {useRouter} from "vue-router";
 
-// const user = {
-//     name: 'Tom Cook',
-//     email: 'tom@example.com',
-//     imageUrl:
-//         'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-// }
-const navigation = [
+
+const navigation = ref([
     { name: 'Home', href: '/', current: true },
-    // { name: 'Team', href: '#', current: false },
-    // { name: 'Projects', href: '#', current: false },
-    // { name: 'Calendar', href: '#', current: false },
-    // { name: 'Reports', href: '#', current: false },
-]
-const userNavigation = [
+])
+
+const userNavigation = ref([
     { name: 'Your Profile', href: '#' },
     { name: 'Settings', href: '#' },
-    { name: 'Sign out', href: '#' },
-]
+    { name: 'Sign out', href: '#' , function : 'logout' },
+])
+const store = useStore();
+const router = useRouter();
 
-export default {
-    components: {
-        Disclosure,
-        DisclosureButton,
-        DisclosurePanel,
-        Menu,
-        MenuButton,
-        MenuItem,
-        MenuItems,
-        BellIcon,
-        MenuIcon,
-        XIcon,
-    },
-    setup() {
-
-        const store = useStore();
-
-
-        return {
-            user : computed(() => store.state.user.data),
-            token : computed(() => store.state.user.token),
-            navigation,
-            userNavigation,
-        }
-    },
+async function getNotifications() {
+        await store.dispatch('getNotifications');
 }
+
+getNotifications()
+
+const user = computed( () =>  store.state.user.data)
+const token = computed(() => store.state.user.token)
+const notifications  = computed(() => store.state.notifications)
+
+
+function handle_function_call(function_name) {
+    this[function_name]()
+}
+
+async function logout() {
+console.log('logout')
+
+await store.dispatch('logout');
+await router.push('/')
+}
+
+
+
+
 </script>
 
 <style scoped>
+
+#bell {
+    position: relative;
+}
+
+.badge {
+    position: absolute;
+    top: 11px;
+    margin-left: 1px;
+    border-radius: 50%;
+    background-color: red;
+    height: 15px;
+    width: 15px;
+    font-size: 10px;
+}
+
+
+@media only screen and (max-width: 768px) {
+
+    .badge {
+        position: absolute;
+        top: 140px;
+        margin-left: 1px;
+        border-radius: 50%;
+        background-color: red;
+        height: 15px;
+        width: 15px;
+        font-size: 10px;
+    }
+
+}
 
 </style>
