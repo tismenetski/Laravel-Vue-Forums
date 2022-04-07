@@ -38,6 +38,16 @@ const store = createStore(
                         return data;
                     })
             },
+            logout({commit}) {
+              if (sessionStorage.getItem('TOKEN')) {
+                  commit('startLoader')
+                  sessionStorage.removeItem('TOKEN');
+                  commit('clearUser')
+                  commit('clearToken')
+                  commit('stopLoader')
+                  return true;
+              }
+            },
             topPosts({commit}) {
                 commit('startLoader');
                 return axiosClient.get('/posts/top/top_posts')
@@ -153,13 +163,16 @@ const store = createStore(
                     })
             },
             getNotifications({commit}) {
-                commit('startLoader');
-                return axiosClient.get('/notifications')
-                    .then(({data})=> {
-                        commit('setNotifications', data)
-                        commit('stopLoader');
-                        return data;
-                    })
+                if (store.state.user.token!==null) {
+                    commit('startLoader');
+                    return axiosClient.get('/notifications')
+                        .then(({data})=> {
+                            commit('setNotifications', data)
+                            commit('stopLoader');
+                            return data;
+                        })
+                }
+
             },
             sendResetPasswordLink({commit} , data) {
                 commit('startLoader');
@@ -206,6 +219,12 @@ const store = createStore(
             },
             setNotifications(state,notificationsData) {
                 state.notifications = notificationsData
+            },
+            clearUser(state) {
+                state.user.data = null;
+            },
+            clearToken(state) {
+                state.user.token = null;
             }
 
         },
