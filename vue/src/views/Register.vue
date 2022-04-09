@@ -77,7 +77,7 @@ const errors = ref({});
 function register(ev) {
     ev.preventDefault();
     store.dispatch('register', user).then(() => {
-            router.push('/');
+            router.push('/verify');
     }).catch((err) => {
         throw err;
     })
