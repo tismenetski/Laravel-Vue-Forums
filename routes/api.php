@@ -74,5 +74,7 @@ Route::controller(NotificationController::class)->prefix('notifications')->group
 
 Route::post('/password/email', [AuthController::class,'sendPasswordResetLinkEmail'])->middleware('throttle:5,1')->name('password.email');
 Route::post('/password/reset', [AuthController::class,'resetPassword'])->name('password.reset');
+Route::get('/email/verify/{id}', [AuthController::class , 'verify'])->name('verification.verify'); // Make sure to keep this as your route name
 
+Route::middleware('auth:sanctum')->get('/email/resend', [AuthController::class , 'resend'])->name('verification.resend');
 
