@@ -25,7 +25,7 @@ class AuthController extends Controller
             'name' => 'string|required',
             'email' => 'required|string|email|unique:users,email',
             'username' => 'required|string|unique:users,username',
-            'password' => ['required','confirmed', Password::min(8)->mixedCase()->numbers()->symbols()]
+            'password' => 'required|min:8|max:255'
         ]);
 
         // Create a user model
@@ -36,15 +36,19 @@ class AuthController extends Controller
            'password' => bcrypt($data['password'])
         ]);
 
+        // Send Email Varification
+        $user->sendEmailVerificationNotification();
+
         // Generate token for user
         $token = $user->createToken('main')->plainTextToken;
-
-
 
         return response([
             'user' => $user,
             'token' => $token
         ]);
+
+
+
     }
 
     public function login(Request $request) {
@@ -88,26 +92,6 @@ class AuthController extends Controller
         ]);
     }
 
-//    public function requestResetPassword(Request $request){
-//
-//        $request->validate([
-//            'email' => 'required|email|exists:users',
-//        ]);
-//
-//        $token = Str::random(64);
-//
-//        DB::table('password_resets')->insert([
-//            'email' => $request->email,
-//            'token' => $token,
-//            'created_at' => Carbon::now()
-//        ]);
-//
-//        Mail::send();
-//    }
-
-    /*
-         * Get authenticated user details
-        */
     public function getAuthenticatedUser(Request $request) {
         return $request->user();
     }
@@ -156,6 +140,33 @@ class AuthController extends Controller
                 'email' => __($status)
             ]);
         }
+    }
+
+    public function verify($user_id, Request $request) {
+        if (!$request->hasValidSignature()) {
+            return response()->json(["msg" => "Invalid/Expired url provided."], 401);
+        }
+
+        $user = User::findOrFail($user_id);
+
+        if (!$user->hasVerifiedEmail()) {
+            $user->markEmailAsVerified();
+        }
+
+        $token = $user->createToken('main')->plainTextToken;
+        return redirect()->to('http://localhost:3000/verified'); //todo change the link to be dynamic in the env
+    }
+
+    public function resend(Request $request) {
+
+        $user = $request->user();
+        if ($user->hasVerifiedEmail()) {
+            return response()->json(["message" => "Email already verified."], 400);
+        }
+
+        $user->sendEmailVerificationNotification();
+
+        return response()->json(["message" => "Email verification link sent on your email id"]);
     }
 
 
