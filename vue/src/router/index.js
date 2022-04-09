@@ -11,6 +11,10 @@ import CreatePost from "../views/CreatePost.vue";
 import DefaultLayout from "../components/DefaultLayout.vue";
 import ForgotPassword from "../views/ForgotPassword.vue";
 import ResetPassword from "../views/ResetPassword.vue";
+import Verify from "../views/Verify.vue";
+import Verified from "../views/Verified.vue";
+import store from '../store/index.js';
+
 
 
 const routes = [
@@ -67,8 +71,21 @@ const routes = [
         path:'/reset-password',
         name : 'resetPassword',
         component: ResetPassword
+    },
+    {
+        path:'/verify',
+        name : 'verify',
+        component: Verify
+    },
+    {
+        path:'/verified',
+        name : 'verified',
+        component: Verified
     }
 ]
+
+
+
 
 
 const router = createRouter( {
@@ -76,6 +93,12 @@ const router = createRouter( {
     history : createWebHistory(),
     routes
 
+})
+
+
+router.beforeEach((to, from, next) => {
+    if ((to.name === 'verify' || to.name === 'verified' || to.name ==='login' || to.name ==='register') && store.state.user.token !== null && store.state.user.data.email_verified_at !== null ) next({ path: '/' })
+    else next()
 })
 
 export default router;

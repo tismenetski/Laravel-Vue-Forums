@@ -4,11 +4,7 @@ const store = createStore(
     {
         state : {
             user : {
-                data : {
-                    name : 'Stas Tismenetski',
-                    age: '35',
-                    imageUrl : 'https://media.npr.org/assets/img/2014/08/07/monkey-selfie_custom-7117031c832fc3607ee5b26b9d5b03d10a1deaca.jpg'
-                },
+                data : JSON.parse(sessionStorage.getItem('USER')),
                 token : sessionStorage.getItem('TOKEN')
             },
             notifications :[],
@@ -27,6 +23,7 @@ const store = createStore(
             register({commit}, user) {
                 return axiosClient.post('/register', user)
                     .then(({data}) => {
+
                         commit('setUser', data);
                         return data;
                     })
@@ -34,6 +31,7 @@ const store = createStore(
             login({commit}, user) {
                 return axiosClient.post('/login', user)
                     .then(({data}) => {
+                        console.log(data)
                         commit('setUser', data);
                         return data;
                     })
@@ -191,6 +189,14 @@ const store = createStore(
                         commit('stopLoader');
                         return data;
                     })
+            },
+            resendEmailConfirmationLink({commit}){
+                commit('startLoader');
+                return axiosClient.get('/email/resend')
+                    .then(({data})=> {
+                        commit('stopLoader');
+                        return data;
+                    })
             }
         },
         mutations : {
@@ -198,6 +204,7 @@ const store = createStore(
                 state.user.token = userData.token;
                 state.user.data = userData.user;
                 sessionStorage.setItem('TOKEN' , userData.token);
+                sessionStorage.setItem('USER' , JSON.stringify(userData.user));
             },
             setTopPosts(state,postsData){
                 state.posts.topPosts = postsData;
