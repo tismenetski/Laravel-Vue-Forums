@@ -39,7 +39,7 @@ class CommentController extends Controller
     public function create(Request $request)
     {
         Log::info(print_r($request->all()));
-        $user = $request->user();
+        $commenting_user = $request->user();
 
        $request->validate([
            'post_id' => 'required|exists:posts,id',
@@ -50,14 +50,14 @@ class CommentController extends Controller
         $comment = Comment::create([
             'post_id' => $request->get('post_id'),
             'content' => $request->get('content'),
-            'user_id' => $user->id
+            'user_id' => $commenting_user->id
         ]);
 
         $post = Post::findOrFail($request->get('post_id'));
         $user_id  = $post->user_id;
         $user = User::find($user_id);
 
-        $user->notify(new NewComment('New Comment To your post'));
+        $user->notify(new NewComment('New Comment To your post' , $post->id ,$commenting_user->username ));
 
         return response($comment, 201);
 

@@ -16,8 +16,10 @@ class NewComment extends Notification
      *
      * @return void
      */
-    public function __construct($notification)
+    public function __construct($notification,$post_id,$username)
     {
+        $this->username = $username;
+        $this->post_id = $post_id;
         $this->notification = $notification;
     }
 
@@ -47,7 +49,7 @@ class NewComment extends Notification
     }
 
     public function toDatabase($notifiable){
-        return [ 'message' => $this->notification ?? ''];
+        return [ 'post_id' => $this->post_id , 'username' => $this->username,'message' => $this->notification ?? ''];
     }
 
     /**
