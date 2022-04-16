@@ -197,7 +197,7 @@ const store = createStore(
                         commit('stopLoader');
                         return data;
                     })
-            }
+            },
         },
         mutations : {
             setUser : (state,userData) => {
