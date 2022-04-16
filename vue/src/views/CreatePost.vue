@@ -1,11 +1,11 @@
 <template>
-<div class="container">
+<div class="container  px-3 md:px-0">
     <loader v-if="loader"></loader>
     <div v-else class="content">
 
 
     <h2 class="title">Add Post To {{topic.name}}</h2>
-    <form @submit.prevent="submitPost">
+    <form class="forum_form" @submit.prevent="submitPost">
         <div class="form-group">
             <label for="title">
                 Post Title
@@ -67,27 +67,6 @@ async function submitPost() {
 <style scoped>
 .container {
     margin: 0 auto;
-}
-
-.title {
-    border: 2px #3f3f3f solid;
-    padding: 20px;
-    background-color: #a0aec0;
-    font-size: 32px;
-    font-weight: 700;
-    border-radius: 20px;
-    margin-top: 30px;
-}
-
-form {
-    border: 1px solid #2d3748;
-    margin-top: 65px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
 }
 
 .form-group {
