@@ -13,7 +13,7 @@ class Post extends Model
 
     protected $fillable = [
 
-        'title', 'content' , 'user_id' , 'topic_id'
+        'title', 'content' , 'user_id' , 'topic_id', 'views'
     ];
 
     //protected $appends = ['votes'];

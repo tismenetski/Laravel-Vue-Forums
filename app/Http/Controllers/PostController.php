@@ -76,6 +76,12 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::where(['id' => $id])->with('comments')->with('user')->first();
+        $views = $post->views;
+        $views+=1;
+        $post->update([
+            'views' => $views
+        ]);
+        $post->save();
         return response($post,200 );
     }
 
