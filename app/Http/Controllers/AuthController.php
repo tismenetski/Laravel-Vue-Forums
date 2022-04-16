@@ -154,7 +154,7 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('main')->plainTextToken;
-        return redirect()->to('http://localhost:3000/verified'); //todo change the link to be dynamic in the env
+        return redirect()->to(getenv('APP_URL').'/verified'); //todo change the link to be dynamic in the env
     }
 
     public function resend(Request $request) {
