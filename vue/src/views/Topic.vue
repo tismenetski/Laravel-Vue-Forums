@@ -1,8 +1,9 @@
 <template>
     <div class="container px-3 md:px-0">
-        <h2 class="title">Recent Discussions on Stas Forums</h2>
+
         <loader v-if="loader"></loader>
         <div class="mt-4" v-else>
+            <h2 class="title">Recent Discussions on {{topic.name}}</h2>
             <router-link class="btn" :to="{ name : 'createPost' , params : {id : topic.id}}">Create Post</router-link>
             <div class="main-content mt-4 flex justify-between flex-row">
                 <div class="posts md:flex-[0_0_65%] flex-[0_0_100%]">
