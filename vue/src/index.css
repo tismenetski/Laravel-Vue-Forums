@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+
+.title {
+    @apply border-[2px] border-solid border-[#3f3f3f] p-[20px] bg-[#a0aec0] text-[32px] font-bold mt-[30px] rounded-[20px]
+
+    /*border: 2px #3f3f3f solid;*/
+    /*padding: 20px;*/
+    /*background-color: #a0aec0;*/
+    /*font-size: 32px;*/
+    /*font-weight: 700;*/
+    /*border-radius: 20px;*/
+    /*margin-top: 30px;*/
+}
+
+
+.btn {
+    @apply  flex justify-center align-middle w-[200px] py-[15px] px-[30px] bg-[#2C3E50] text-white rounded-[5px] mt-5
+}
+
+
+.table_row {
+    @apply border-[1px] border-black border-collapse
+}

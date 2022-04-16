@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReplyController;
@@ -75,6 +76,12 @@ Route::controller(NotificationController::class)->prefix('notifications')->group
 Route::post('/password/email', [AuthController::class,'sendPasswordResetLinkEmail'])->middleware('throttle:5,1')->name('password.email');
 Route::post('/password/reset', [AuthController::class,'resetPassword'])->name('password.reset');
 Route::get('/email/verify/{id}', [AuthController::class , 'verify'])->name('verification.verify'); // Make sure to keep this as your route name
-
 Route::middleware('auth:sanctum')->get('/email/resend', [AuthController::class , 'resend'])->name('verification.resend');
 
+
+
+Route::controller(NotificationController::class)->prefix('messages')->group(function (){
+    Route::middleware('auth:sanctum')->post('/', [MessageController::class,'create']);
+    Route::middleware('auth:sanctum')->delete('/', [MessageController::class,'destroy']);
+    Route::middleware('auth:sanctum')->get('/conversation', [MessageController::class,'get_conversation']);
+});

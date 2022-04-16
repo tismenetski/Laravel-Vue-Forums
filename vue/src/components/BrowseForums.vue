@@ -1,9 +1,9 @@
 <template>
-    <div class="forums">
+    <div class="hidden md:block forums">
         <h3 class="browse_forums_title">Browse Forums</h3>
-        <ul>
-            <li v-for="(topic,index) in topics" :key="index">
-                <router-link @click="getTopic($event, topic)" :to="{name: 'topic', params : {id:topic.id}}"><span><font-awesome-icon icon="comment"/></span>{{topic.name}}</router-link>
+        <ul class="flex justify-center flex-col align-middle">
+            <li class="mt-[10px] w-full" v-for="(topic,index) in topics" :key="index">
+                <router-link @click="getTopic($event, topic)" :to="{name: 'topic', params : {id:topic.id}}"><span class="mx-[10px]"><font-awesome-icon icon="comment"/></span>{{topic.name}}</router-link>
             </li>
         </ul>
     </div>
@@ -42,22 +42,22 @@ function getTopic(event,topic) {
     height: fit-content;
 }
 
-.forums ul {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+/*.forums ul {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*}*/
 
-.forums ul li {
-    margin-top: 10px;
-    width: 100%;
-}
+/*.forums ul li {*/
+/*    margin-top: 10px;*/
+/*    width: 100%;*/
+/*}*/
 
-li span {
-    margin-right: 10px;
-    margin-left: 10px;
-}
+/*li span {*/
+/*    margin-right: 10px;*/
+/*    margin-left: 10px;*/
+/*}*/
 
 .browse_forums_title {
     text-align: center;

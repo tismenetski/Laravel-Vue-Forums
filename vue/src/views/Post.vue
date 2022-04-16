@@ -5,17 +5,6 @@
             <h2 class="post-title">{{post.title}}</h2>
             <div class="posts-content">
                 <single-post :post="post" :user="user"></single-post>
-<!--                <div class="single-post">-->
-<!--                    <div class="post-votes">-->
-<!--                        <button @click="upvotePost()" :disabled="post.user_id=== user.id"> <font-awesome-icon icon="caret-up" size="2x" /></button>-->
-<!--                        <p class="post-votes-result">{{post.upvotes.length - post.downvotes.length}}</p>-->
-<!--                        <button @click="downvotePost()" :disabled="post.user_id=== user.id">   <font-awesome-icon icon="caret-down" size="2x" /></button>-->
-<!--                    </div>-->
-<!--                        <div class="post-content">-->
-<!--                            <h4 class="post-header">#1    {{post.user.username}}</h4>-->
-<!--                            <div>{{post.content}}</div>-->
-<!--                        </div>-->
-<!--                </div>-->
                 <div v-if="token"   class="post-actions" >
                     <textarea name="comment"
                               id="comment"
